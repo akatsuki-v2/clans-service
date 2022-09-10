@@ -114,3 +114,18 @@ class ClansRepo:
         clan = await self.ctx.db.fetch_one(query, params)
         assert clan is not None
         return clan
+
+    async def disband(self, clan_id: int) -> Mapping[str, Any]:
+        query = f"""\
+            UPDATE clans
+                SET status = :new_status
+              WHERE clan_id = :clan_id
+            RETURNING {self.READ_PARAMS}
+        """
+        params = {
+            "clan_id": clan_id,
+            "new_status": Status.DELETED,
+        }
+        clan = await self.ctx.db.fetch_one(query, params)
+        assert clan is not None
+        return clan
