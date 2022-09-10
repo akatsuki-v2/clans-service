@@ -27,7 +27,7 @@ class ClansRepo:
                      description: str,
                      owner: int,
                      join_method: JoinMethod,
-                     status: Status):
+                     status: Status) -> Mapping[str, Any]:
         query = f"""\
             INSERT INTO clans (name, tag, description, owner, join_method, status)
                 VALUES (:name, :tag, :description, :owner, :join_method, :status)
@@ -41,8 +41,9 @@ class ClansRepo:
             "join_method": join_method,
             "status": status,
         }
-        clans = await self.ctx.db.fetch_one(query, params)
-        return clans
+        clan = await self.ctx.db.fetch_one(query, params)
+        assert clan
+        return clan
 
     async def fetch_one(self, clan_id: int | None = None,
                         tag: str | None = None, name: str | None = None,
