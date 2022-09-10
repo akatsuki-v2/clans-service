@@ -32,4 +32,5 @@ cd /srv/root
 pytest \
     --cov=app \
     --cov-report=term \
+    --cov-report=html:tests/htmlcov \
     tests/
