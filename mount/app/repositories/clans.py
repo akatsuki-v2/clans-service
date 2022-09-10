@@ -42,7 +42,7 @@ class ClansRepo:
             "status": status,
         }
         clan = await self.ctx.db.fetch_one(query, params)
-        assert clan
+        assert clan is not None
         return clan
 
     async def fetch_one(self, clan_id: int | None = None,
@@ -108,4 +108,5 @@ class ClansRepo:
             "status": None,
         } | updates
         clan = await self.ctx.db.fetch_one(query, params)
+        assert clan is not None
         return clan
