@@ -35,4 +35,9 @@ class UpdateClan(BaseModel):
 #
 class Clan(BaseModel):
     clan_id: int
+    name: str
+    tag: str
+    description: str | None
+    owner: int
     created_at: datetime
+    updated_at: datetime
