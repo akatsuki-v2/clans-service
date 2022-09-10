@@ -30,7 +30,7 @@ class ClansRepo:
                      status: Status = Status.ACTIVE) -> Mapping[str, Any]:
         query = f"""\
             INSERT INTO clans (name, tag, description, owner, join_method, status)
-                VALUES (:name, :tag, :description, :owner, :join_method, :status)
+                 VALUES (:name, :tag, :description, :owner, :join_method, :status)
               RETURNING {self.READ_PARAMS}
         """
         params = {
@@ -51,10 +51,10 @@ class ClansRepo:
         query = f"""\
             SELECT {self.READ_PARAMS}
               FROM clans
-            WHERE clan_id = COALESCE(:clan_id, clan_id)
-                AND name = COALESCE(:name, name)
-                AND tag = COALESCE(:tag, tag)
-                AND status = COALESCE(:status, status)
+             WHERE clan_id = COALESCE(:clan_id, clan_id)
+               AND name = COALESCE(:name, name)
+               AND tag = COALESCE(:tag, tag)
+               AND status = COALESCE(:status, status)
         """
         params = {
             "clan_id": clan_id,
@@ -71,10 +71,10 @@ class ClansRepo:
         query = f"""\
             SELECT {self.READ_PARAMS}
               FROM clans
-            WHERE clan_id = COALESCE(:clan_id, clan_id)
-                AND name = COALESCE(:name, name)
-                AND tag = COALESCE(:tag, tag)
-                AND status = COALESCE(:status, status)
+             WHERE clan_id = COALESCE(:clan_id, clan_id)
+               AND name = COALESCE(:name, name)
+               AND tag = COALESCE(:tag, tag)
+               AND status = COALESCE(:status, status)
         """
         params = {
             "clan_id": clan_id,
@@ -87,16 +87,16 @@ class ClansRepo:
 
     async def partial_update(self, clan_id: int, **updates) -> Mapping[str, Any] | None:
         query = f"""\
-            UPDATE clans SET
-                name = COALESCE(:name, name),
-                tag = COALESCE(:tag, tag),
-                description = COALESCE(:description, description),
-                owner = COALESCE(:owner, owner),
-                join_method = COALESCE(:join_method, join_method),
-                status = COALESCE(:status, status),
-                updated_at = CURRENT_TIMESTAMP,
-              WHERE clan_id = :clan_id
-            RETURNING {self.READ_PARAMS}
+            UPDATE clans
+               SET name = COALESCE(:name, name),
+                   tag = COALESCE(:tag, tag),
+                   description = COALESCE(:description, description),
+                   owner = COALESCE(:owner, owner),
+                   join_method = COALESCE(:join_method, join_method),
+                   status = COALESCE(:status, status),
+                   updated_at = CURRENT_TIMESTAMP,
+             WHERE clan_id = :clan_id
+         RETURNING {self.READ_PARAMS}
         """
         params = {
             "clan_id": clan_id,
