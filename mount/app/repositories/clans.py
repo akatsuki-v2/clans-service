@@ -1,14 +1,9 @@
-from enum import Enum
 from typing import Any, Mapping
 
 from app.common.context import Context
 from app.models import Status
+from app.models.clans import JoinMethod
 
-
-class JoinMethod(str, Enum):
-    OPEN = 'open'
-    BY_REQUEST = 'by-request'
-    INVITE_ONLY = 'invite-only'
 
 
 class ClansRepo:
@@ -85,7 +80,7 @@ class ClansRepo:
         clans = await self.ctx.db.fetch_all(query, params)
         return clans
 
-    async def partial_update(self, clan_id: int, **updates) -> Mapping[str, Any] | None:
+    async def partial_update(self, clan_id: int, **updates) -> Mapping[str, Any]:
         query = f"""\
             UPDATE clans
                SET name = COALESCE(:name, name),
