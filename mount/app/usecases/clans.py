@@ -23,8 +23,8 @@ async def create(ctx: Context,
     if await repo.fetch_one(tag=tag):
         return ServiceError.CLANS_TAG_EXISTS
 
-    rec = await repo.create(name, tag, description, owner, join_method)
-    return rec
+    clan = await repo.create(name, tag, description, owner, join_method)
+    return clan
 
 
 async def fetch_one(ctx: Context, clan_id: int) -> Mapping[str, Any] | ServiceError:
