@@ -66,8 +66,8 @@ class ClansRepo:
         return clan
 
     async def fetch_all(self, clan_id: int | None = None,
-                    tag: str | None = None, name: str | None = None,
-                    status: Status | None = None) -> list[Mapping[str, Any]]:
+                        tag: str | None = None, name: str | None = None,
+                        status: Status | None = None) -> list[Mapping[str, Any]]:
         query = f"""\
             SELECT {self.READ_PARAMS}
               FROM clans
