@@ -27,7 +27,7 @@ class ClansRepo:
                      description: str,
                      owner: int,
                      join_method: JoinMethod,
-                     status: Status) -> Mapping[str, Any]:
+                     status: Status = Status.ACTIVE) -> Mapping[str, Any]:
         query = f"""\
             INSERT INTO clans (name, tag, description, owner, join_method, status)
                 VALUES (:name, :tag, :description, :owner, :join_method, :status)
