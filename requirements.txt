@@ -1,0 +1,9 @@
+aioredis
+asyncpg
+databases==0.5.5
+fastapi[all]
+pytest
+pytest-asyncio
+pytest-cov
+python-dotenv
+uvicorn[standard]
