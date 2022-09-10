@@ -65,3 +65,14 @@ async def partial_update(ctx: Context,
 
     clan = await repo.partial_update(clan_id, **kwargs)
     return clan
+
+
+async def disband(ctx: Context, clan_id: int) -> Mapping[str, Any] | ServiceError:
+    repo = ClansRepo(ctx)
+
+    clan = await repo.fetch_one(clan_id=clan_id)
+    if not clan:
+        return ServiceError.CLANS_NOT_FOUND
+
+    clan = await repo.disband(clan_id)
+    return clan
