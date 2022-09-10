@@ -65,7 +65,7 @@ class ClansRepo:
         clan = await self.ctx.db.fetch_one(query, params)
         return clan
 
-    async def fetch(self, clan_id: int | None = None,
+    async def fetch_all(self, clan_id: int | None = None,
                     tag: str | None = None, name: str | None = None,
                     status: Status | None = None) -> list[Mapping[str, Any]]:
         query = f"""\
