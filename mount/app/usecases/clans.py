@@ -54,5 +54,14 @@ async def partial_update(ctx: Context,
     if not kwargs:
         return clan
 
+    new_tag = kwargs.get("tag")
+    new_name = kwargs.get("name")
+
+    if new_tag and await repo.fetch_one(tag=new_tag):
+        return ServiceError.CLANS_TAG_EXISTS
+
+    if new_name and await repo.fetch_one(name=new_name):
+        return ServiceError.CLANS_NAME_EXISTS
+
     clan = await repo.partial_update(clan_id, **kwargs)
     return clan
