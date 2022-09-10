@@ -18,7 +18,7 @@ class JoinMethod(str, Enum):
 class CreateClan(BaseModel):
     name: str = Field(..., min_length=1, max_length=32)
     tag: str = Field(..., min_length=1, max_length=8)
-    description: str
+    description: str | None
     owner: int
     join_method: JoinMethod
 
