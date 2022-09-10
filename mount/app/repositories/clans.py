@@ -5,7 +5,6 @@ from app.models import Status
 from app.models.clans import JoinMethod
 
 
-
 class ClansRepo:
     READ_PARAMS = """\
         clan_id, name, tag, description,
