@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends
 
 from app.api.rest.context import RequestContext
