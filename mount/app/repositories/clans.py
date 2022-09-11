@@ -18,7 +18,7 @@ class ClansRepo:
     async def create(self,
                      name: str,
                      tag: str,
-                     description: str,
+                     description: str | None,
                      owner: int,
                      join_method: JoinMethod,
                      status: Status = Status.ACTIVE) -> Mapping[str, Any]:

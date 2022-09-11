@@ -9,7 +9,7 @@ from app.repositories.clans import ClansRepo
 async def create(ctx: Context,
                  name: str,
                  tag: str,
-                 description: str,
+                 description: str | None,
                  owner: int,
                  join_method: JoinMethod) -> Mapping[str, Any] | ServiceError:
     repo = ClansRepo(ctx)
