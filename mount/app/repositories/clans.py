@@ -5,7 +5,6 @@ from app.models import Status
 from app.models.clans import JoinMethod
 
 
-
 class ClansRepo:
     READ_PARAMS = """\
         clan_id, name, tag, description,
@@ -40,41 +39,51 @@ class ClansRepo:
         assert clan is not None
         return clan
 
-    async def fetch_one(self, clan_id: int | None = None,
-                        tag: str | None = None, name: str | None = None,
-                        status: Status | None = None) -> Mapping[str, Any] | None:
+    async def fetch_one(self,
+                        clan_id: int | None = None,
+                        tag: str | None = None,
+                        name: str | None = None,
+                        owner: int | None = None,
+                        status: Status | None = Status.ACTIVE) -> Mapping[str, Any] | None:
         query = f"""\
             SELECT {self.READ_PARAMS}
               FROM clans
              WHERE clan_id = COALESCE(:clan_id, clan_id)
                AND name = COALESCE(:name, name)
                AND tag = COALESCE(:tag, tag)
+               AND owner = COALESCE(:owner, owner)
                AND status = COALESCE(:status, status)
         """
         params = {
             "clan_id": clan_id,
             "tag": tag,
             "name": name,
+            "owner": owner,
             "status": status,
         }
         clan = await self.ctx.db.fetch_one(query, params)
         return clan
 
-    async def fetch_all(self, clan_id: int | None = None,
-                        tag: str | None = None, name: str | None = None,
-                        status: Status | None = None) -> list[Mapping[str, Any]]:
+    async def fetch_all(self,
+                        clan_id: int | None = None,
+                        tag: str | None = None,
+                        name: str | None = None,
+                        owner: int | None = None,
+                        status: Status | None = Status.ACTIVE) -> list[Mapping[str, Any]]:
         query = f"""\
             SELECT {self.READ_PARAMS}
               FROM clans
              WHERE clan_id = COALESCE(:clan_id, clan_id)
                AND name = COALESCE(:name, name)
                AND tag = COALESCE(:tag, tag)
+               AND owner = COALESCE(:owner, owner)
                AND status = COALESCE(:status, status)
         """
         params = {
             "clan_id": clan_id,
             "tag": tag,
             "name": name,
+            "owner": owner,
             "status": status,
         }
         clans = await self.ctx.db.fetch_all(query, params)
@@ -89,7 +98,7 @@ class ClansRepo:
                    owner = COALESCE(:owner, owner),
                    join_method = COALESCE(:join_method, join_method),
                    status = COALESCE(:status, status),
-                   updated_at = CURRENT_TIMESTAMP,
+                   updated_at = CURRENT_TIMESTAMP
              WHERE clan_id = :clan_id
          RETURNING {self.READ_PARAMS}
         """
@@ -102,6 +111,22 @@ class ClansRepo:
             "join_method": None,
             "status": None,
         } | updates
+        clan = await self.ctx.db.fetch_one(query, params)
+        assert clan is not None
+        return clan
+
+    async def disband(self, clan_id: int) -> Mapping[str, Any]:
+        query = f"""\
+            UPDATE clans
+                SET status = :new_status,
+                    updated_at = CURRENT_TIMESTAMP
+              WHERE clan_id = :clan_id
+            RETURNING {self.READ_PARAMS}
+        """
+        params = {
+            "clan_id": clan_id,
+            "new_status": Status.DELETED,
+        }
         clan = await self.ctx.db.fetch_one(query, params)
         assert clan is not None
         return clan
