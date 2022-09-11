@@ -118,7 +118,8 @@ class ClansRepo:
     async def disband(self, clan_id: int) -> Mapping[str, Any]:
         query = f"""\
             UPDATE clans
-                SET status = :new_status
+                SET status = :new_status,
+                    updated_at = CURRENT_TIMESTAMP
               WHERE clan_id = :clan_id
             RETURNING {self.READ_PARAMS}
         """
