@@ -98,7 +98,7 @@ class ClansRepo:
                    owner = COALESCE(:owner, owner),
                    join_method = COALESCE(:join_method, join_method),
                    status = COALESCE(:status, status),
-                   updated_at = CURRENT_TIMESTAMP,
+                   updated_at = CURRENT_TIMESTAMP
              WHERE clan_id = :clan_id
          RETURNING {self.READ_PARAMS}
         """
