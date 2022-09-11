@@ -205,6 +205,40 @@ async def test_should_partial_update(ctx: Context):
     assert data["updated_at"] is not None
 
 
+async def test_should_fail_partial_update_no_change(ctx: Context):
+    name = "Haakatsuki Quality Control"
+    tag = "HQCa"
+    description = "The"
+    owner = 1940
+    join_method = JoinMethod.CLOSED
+
+    data = await clans.create(ctx,name, tag, description, owner, join_method)
+    assert not isinstance(data, ServiceError)
+
+    assert data["clan_id"] is not None
+    clan_id = data["clan_id"]
+
+    assert data["name"] == name
+    assert data["tag"] == tag
+    assert data["description"] == description
+    assert data["owner"] == owner
+    assert data["join_method"] == join_method
+    assert data["created_at"] is not None
+    assert data["updated_at"] is not None
+
+    data = await clans.partial_update(ctx, clan_id)
+    assert not isinstance(data, ServiceError)
+    
+    assert data["clan_id"] is not None
+    assert data["name"] == name
+    assert data["tag"] == tag
+    assert data["description"] == description
+    assert data["owner"] == owner
+    assert data["join_method"] == join_method
+    assert data["created_at"] is not None
+    assert data["updated_at"] is not None
+
+
 async def test_should_fail_partial_update_no_clan(ctx: Context):
     new_name = "Gkatsuki 2"
     data = await clans.partial_update(ctx, 0, name=new_name)
