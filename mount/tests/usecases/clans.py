@@ -16,7 +16,7 @@ async def test_should_create(ctx: Context):
     name = "Akatsuki Quality Control"
     tag = "AQC"
     description = "The"
-    owner = 1935
+    owner = 1000
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
@@ -33,8 +33,8 @@ async def test_should_create(ctx: Context):
 
 
 async def test_should_fail_already_in_clan(ctx: Context):
-    name = "Akatsuki Quality Control"
-    tag = "AQC"
+    name = "Akatsuki Buality Control"
+    tag = "ABC"
     description = "The"
     owner = 1935
     join_method = JoinMethod.CLOSED
@@ -63,10 +63,10 @@ async def test_should_fail_already_in_clan(ctx: Context):
 
 
 async def test_should_fail_existing_tag(ctx: Context):
-    name = "Akatsuki Quality Control"
-    tag = "AQC"
+    name = "Bkatsuki Quality Control"
+    tag = "BQC"
     description = "The"
-    owner = 1935
+    owner = 1936
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
@@ -81,8 +81,8 @@ async def test_should_fail_existing_tag(ctx: Context):
     assert data["created_at"] is not None
     assert data["updated_at"] is not None
 
-    name = "Akatsuki Quality Control 2"
-    tag = "AQC"
+    name = "Bkatsuki Quality Control 2"
+    tag = "BQC"
     description = "The"
     owner = 1001
     join_method = JoinMethod.CLOSED
@@ -93,10 +93,10 @@ async def test_should_fail_existing_tag(ctx: Context):
 
 
 async def test_should_fail_existing_name(ctx: Context):
-    name = "Akatsuki Quality Control"
-    tag = "AQC"
+    name = "Dkatsuki Quality Control"
+    tag = "DQC"
     description = "The"
-    owner = 1935
+    owner = 1938
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
@@ -111,10 +111,10 @@ async def test_should_fail_existing_name(ctx: Context):
     assert data["created_at"] is not None
     assert data["updated_at"] is not None
 
-    name = "Akatsuki Quality Control"
-    tag = "AQC2"
+    name = "Dkatsuki Quality Control"
+    tag = "DQC2"
     description = "The"
-    owner = 1001
+    owner = 1002
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
@@ -123,10 +123,10 @@ async def test_should_fail_existing_name(ctx: Context):
 
 
 async def test_should_fetch_one(ctx: Context):
-    name = "Akatsuki Quality Control"
-    tag = "AQC"
+    name = "Fkatsuki Quality Control"
+    tag = "FQC"
     description = "The"
-    owner = 1935
+    owner = 1939
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
@@ -160,10 +160,10 @@ async def test_should_fetch_all(ctx: Context):
 
 
 async def test_should_partial_update(ctx: Context):
-    name = "Akatsuki Quality Control"
-    tag = "AQC"
+    name = "Hkatsuki Quality Control"
+    tag = "HQC"
     description = "The"
-    owner = 1935
+    owner = 1940
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx,name, tag, description, owner, join_method)
@@ -180,10 +180,10 @@ async def test_should_partial_update(ctx: Context):
     assert data["created_at"] is not None
     assert data["updated_at"] is not None
 
-    new_name = "Akatsuki Quality Control 2"
-    new_tag = "AQC2"
+    new_name = "Hkatsuki Quality Control 2"
+    new_tag = "HHC"
     new_description = "The new control"
-    new_owner = 1001
+    new_owner = 1040
     new_join_method = JoinMethod.INVITE_ONLY
 
     data = await clans.partial_update(ctx,
@@ -206,17 +206,17 @@ async def test_should_partial_update(ctx: Context):
 
 
 async def test_should_fail_partial_update_no_clan(ctx: Context):
-    new_name = "Akatsuki 2"
+    new_name = "Gkatsuki 2"
     data = await clans.partial_update(ctx, 0, name=new_name)
     assert isinstance(data, ServiceError)
     assert data == ServiceError.CLANS_NOT_FOUND
 
 
 async def test_should_fail_partial_update_name_exists(ctx: Context):
-    first_name = "Akatsuki Quality Control"
-    tag = "AQC"
+    first_name = "Gkatsuki Quality Control"
+    tag = "GQC"
     description = "The"
-    owner = 1935
+    owner = 19234
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, first_name, tag, description, owner, join_method)
@@ -233,10 +233,10 @@ async def test_should_fail_partial_update_name_exists(ctx: Context):
 
 
     # 2nd clan
-    name = "Akatsuki Quality Control 2"
-    tag = "AQC2"
+    name = "QWkatsuki Quality Control 2"
+    tag = "QWQC2"
     description = "The"
-    owner = 1001
+    owner = 100123
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
@@ -260,10 +260,10 @@ async def test_should_fail_partial_update_name_exists(ctx: Context):
 
 
 async def test_should_fail_partial_update_tag_exists(ctx: Context):
-    name = "Akatsuki Quality Control"
-    first_tag = "AQC"
+    name = "AAAAAAAkatsuki Quality Control"
+    first_tag = "AAAAQC"
     description = "The"
-    owner = 1935
+    owner = 135
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, first_tag, description, owner, join_method)
@@ -280,10 +280,10 @@ async def test_should_fail_partial_update_tag_exists(ctx: Context):
 
 
     # 2nd clan
-    name = "Akatsuki Quality Control 2"
-    tag = "AQC2"
+    name = "Aegrgekatsuki Quality C"
+    tag = "AQCgh2"
     description = "The"
-    owner = 1001
+    owner = 101
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
@@ -307,10 +307,10 @@ async def test_should_fail_partial_update_tag_exists(ctx: Context):
 
 
 async def test_should_disband(ctx: Context):
-    name = "Akatsuki Quality Control"
-    tag = "AQC"
+    name = "Akatsuki Quafghjlity Co"
+    tag = "AffQC"
     description = "The"
-    owner = 1935
+    owner = 19354
     join_method = JoinMethod.CLOSED
 
     data = await clans.create(ctx, name, tag, description, owner, join_method)
