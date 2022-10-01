@@ -24,6 +24,7 @@ async def create_clan(args: CreateClan, ctx: RequestContext = Depends()):
     resp = Clan.from_mapping(data)
     return responses.success(resp)
 
+
 # https://osuakatsuki.atlassian.net/browse/V2-21
 @router.get("/clans/{clan_id}", response_model=Clan)
 async def get_clan(clan_id: int, ctx: RequestContext = Depends()):
@@ -34,11 +35,14 @@ async def get_clan(clan_id: int, ctx: RequestContext = Depends()):
     resp = Clan.from_mapping(data)
     return responses.success(resp)
 
+
+# https://osuakatsuki.atlassian.net/browse/V2-113
 @router.get("/clans", response_model=Clan)
 async def get_clans(ctx: RequestContext = Depends()):
     data = await clans.fetch_all(ctx)
     resp = [Clan.from_mapping(clan) for clan in data]
     return responses.success(resp)
+
 
 # https://osuakatsuki.atlassian.net/browse/V2-64
 @router.patch("/clans/{clan_id}", response_model=Clan)
@@ -50,6 +54,7 @@ async def partial_update_clan(clan_id: int, args: UpdateClan,
 
     resp = Clan.from_mapping(data)
     return responses.success(resp)
+
 
 # https://osuakatsuki.atlassian.net/browse/V2-23
 @router.delete("/clans/{clan_id}", response_model=Clan)

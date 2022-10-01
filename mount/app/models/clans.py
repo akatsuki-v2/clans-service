@@ -23,6 +23,7 @@ class CreateClan(BaseModel):
     owner: int
     join_method: JoinMethod
 
+
 class UpdateClan(BaseModel):
     name: str | None = Field(None, min_length=1, max_length=32)
     tag: str | None = Field(None, min_length=1, max_length=8)
