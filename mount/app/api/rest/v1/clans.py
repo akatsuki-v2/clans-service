@@ -37,7 +37,7 @@ async def get_clan(clan_id: int, ctx: RequestContext = Depends()):
 
 
 # https://osuakatsuki.atlassian.net/browse/V2-113
-@router.get("/clans", response_model=Clan)
+@router.get("/clans", response_model=list[Clan])
 async def get_clans(ctx: RequestContext = Depends()):
     data = await clans.fetch_all(ctx)
     resp = [Clan.from_mapping(clan) for clan in data]
