@@ -6,4 +6,5 @@ pytest
 pytest-asyncio
 pytest-cov
 python-dotenv
+sqlalchemy==1.4.41
 uvicorn[standard]
